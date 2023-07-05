@@ -12,13 +12,15 @@ import java.util.Date;
 public class DateUtils {
     public Date createDateFromDateString(String dateString) {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = null;
+        Date date;
         if (StringUtils.hasText(dateString)) {
             try {
                 date = format.parse(dateString);
             } catch (ParseException e) {
                 date = new Date();
             }
+        } else {
+            date = new Date();
         }
         return date;
     }

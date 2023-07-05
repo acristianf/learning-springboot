@@ -39,10 +39,14 @@ public class ReservationService {
             roomReservation.setLastName(guest.getLastName());
         });
         List<RoomReservation> roomReservations = new ArrayList<>();
-        roomReservationMap.forEach((id, roomReservation) -> {
-            if (roomReservation.getDate() == date) {
-                roomReservations.add(roomReservation);
+        for (Long id : roomReservationMap.keySet()) {
+            roomReservations.add(roomReservationMap.get(id));
+        }
+        roomReservations.sort((reservation1, reservation2) -> {
+            if (reservation1.getRoomName().equals(reservation2.getRoomName())) {
+                return reservation1.getRoomNumber().compareTo(reservation2.getRoomNumber());
             }
+            return reservation1.getRoomName().compareTo(reservation2.getRoomName());
         });
         return roomReservations;
     }
