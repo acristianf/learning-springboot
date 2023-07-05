@@ -50,4 +50,7 @@ public class ReservationService {
         });
         return roomReservations;
     }
+    public List<Guest> getGuests() {
+        return (List<Guest>) this.guestRepository.findAll();
+    }
 }

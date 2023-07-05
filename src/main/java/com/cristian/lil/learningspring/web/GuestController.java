@@ -1,7 +1,7 @@
 package com.cristian.lil.learningspring.web;
 
+import com.cristian.lil.learningspring.business.ReservationService;
 import com.cristian.lil.learningspring.data.Guest;
-import com.cristian.lil.learningspring.data.GuestRepository;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,15 +12,15 @@ import java.util.List;
 @Controller
 @RequestMapping("/guests")
 public class GuestController {
-    private final GuestRepository guestRepository;
+    private final ReservationService reservationService;
 
-    public GuestController(GuestRepository guestRepository) {
-        this.guestRepository = guestRepository;
+    public GuestController(ReservationService reservationService) {
+        this.reservationService = reservationService;
     }
 
     @RequestMapping(method = RequestMethod.GET)
     public String getGuests(Model model) {
-        List<Guest> guestList = (List<Guest>) guestRepository.findAll();
+        List<Guest> guestList = reservationService.getGuests();
         guestList.sort((g1, g2) -> {
             if (g1.getLastName().equals(g2.getLastName())) {
                 return g1.getFirstName().compareTo(g2.getFirstName());
