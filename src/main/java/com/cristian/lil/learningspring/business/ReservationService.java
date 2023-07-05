@@ -53,4 +53,15 @@ public class ReservationService {
     public List<Guest> getGuests() {
         return (List<Guest>) this.guestRepository.findAll();
     }
+    public Guest saveGuest(Guest newGuest) {
+        if (newGuest == null) {
+            throw new RuntimeException("Guest cannot be null");
+        }
+        return this.guestRepository.save(newGuest);
+    }
+    public List<Room> getRooms() {
+        List<Room> rooms = (List<Room>) this.roomRepository.findAll();
+        rooms.sort(Comparator.comparing(Room::getRoomNumber));
+        return rooms;
+    }
 }

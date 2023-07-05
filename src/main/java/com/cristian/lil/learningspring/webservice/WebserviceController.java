@@ -2,11 +2,11 @@ package com.cristian.lil.learningspring.webservice;
 
 import com.cristian.lil.learningspring.business.ReservationService;
 import com.cristian.lil.learningspring.business.RoomReservation;
+import com.cristian.lil.learningspring.data.Guest;
+import com.cristian.lil.learningspring.data.Room;
 import com.cristian.lil.learningspring.util.DateUtils;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -26,5 +26,18 @@ public class WebserviceController {
     public List<RoomReservation> getReservations(@RequestParam(value="date", required = false)String date) {
         Date parsedDate = dateUtils.createDateFromDateString(date);
         return this.reservationService.getRoomReservationForDate(parsedDate);
+    }
+    @RequestMapping(path = "/guests", method = RequestMethod.GET)
+    public List<Guest> getGuests() {
+        return this.reservationService.getGuests();
+    }
+    @PostMapping(path="/guests")
+    @ResponseStatus(HttpStatus.CREATED)
+    public Guest newGuest(@RequestBody Guest newGuest) {
+        return this.reservationService.saveGuest(newGuest);
+    }
+    @GetMapping(path="/rooms")
+    public List<Room> getRooms(){
+        return this.reservationService.getRooms();
     }
 }
